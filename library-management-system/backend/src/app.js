@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Database connection
-mongoose.connect(config.databaseUrl, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(config.db.databaseUrl, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log('Database connected successfully'))
   .catch(err => console.error('Database connection error:', err));
 
