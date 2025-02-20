@@ -6,13 +6,11 @@ import SignInPage from './pages/SignInPage';
 import BookDisplayPage from './pages/BookDisplayPage';
 import ReviewPage from './pages/ReviewPage';
 import WishlistPage from './pages/WishlistPage';
-import Navbar from './components/Navbar';
 
 function App() {
   return (
     <Router>
       <div>
-        <Navbar />
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/signup" component={SignUpPage} />
