@@ -9,10 +9,6 @@ const HomePage = () => {
       <p>Discover a world of books and manage your reading experience with ease.</p>
       <div className="features">
         <div className="feature">
-          <h2><Link to="/signup">Sign Up/Sign In</Link></h2>
-          <p>Create an account to access personalized features.</p>
-        </div>
-        <div className="feature">
           <h2><Link to="/books">Browse Books</Link></h2>
           <p>Explore our extensive collection of books.</p>
         </div>
