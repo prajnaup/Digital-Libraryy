@@ -21,12 +21,24 @@ vertical-align: middle;
 line-height: 0;
 }
 
+.navbar-brand link {
+  justify-content: flex-end;
+  width: 50px;
+  height: 100%;
+}
+
 .navbar-brand a {
   color: #fff;
   text-decoration: none;
   font-size: 1.5em;
   bottom: 0%;
   top: 0%;
+}
+.navbar-title {
+  justify-content: left;
+  margin-left: 10px;
+  padding: 0%;
+  text-align: left;
 }
 
 

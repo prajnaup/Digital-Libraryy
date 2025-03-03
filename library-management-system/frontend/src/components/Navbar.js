@@ -6,8 +6,12 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/"><img src='logo.jpg' height="100%" width="50px"></img>Digital Library</Link>
+        <Link to="/"><img src='logo.jpg' height="100%" width="50px"></img></Link>
       </div>
+      <div className="navbar-title">
+          <span>Digital</span><br />
+          <span>Library</span>
+        </div>
       <ul className="navbar-links">
         <li><Link to="/signup">Sign Up</Link></li>
         <li><Link to="/signin">Sign In</Link></li>
