@@ -9,12 +9,10 @@ const Navbar = () => {
         <Link to="/"><img src='logo.jpg' height="100%" width="50px"></img></Link>
       </div>
       <div className="navbar-title">
-          <span>Digital</span><br />
-          <span>Library</span>
+         Digital<br/>Library
         </div>
       <ul className="navbar-links">
-        <li><Link to="/signup">Sign Up</Link></li>
-        <li><Link to="/signin">Sign In</Link></li>
+        <li><Link to="/signin">Log In</Link></li>
       </ul>
     </nav>
   );

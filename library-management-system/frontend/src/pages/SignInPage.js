@@ -34,6 +34,7 @@ const SignInPage = () => {
         <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
         <button type="submit">Sign In</button>
       </form>
+      <p>New user? <a href="/signup">Register here</a></p>
     </div>
   );
 };

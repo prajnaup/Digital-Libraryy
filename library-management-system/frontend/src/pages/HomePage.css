@@ -1,11 +1,18 @@
 .homepage {
   display: flex;
+  background-image: url('https://img.freepik.com/free-vector/light-streak-glowing-background-beam-effect_1017-26177.jpg?semt=ais_hybrid');
+  background-attachment: fixed;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  margin: 0%;
+  padding: 0%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100vh;
   text-align: center;
   padding: 20px;
+
 }
 
 .features {
