@@ -1,18 +1,23 @@
 .homepage {
   display: flex;
-  background-image: url('https://img.freepik.com/free-vector/light-streak-glowing-background-beam-effect_1017-26177.jpg?semt=ais_hybrid');
-  background-attachment: fixed;
-  background-size: 100%;
-  background-repeat: no-repeat;
-  margin: 0%;
-  padding: 0%;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+   /* height: 100vh;  */
   text-align: center;
   padding: 20px;
+  overflow-y: auto; /* Enable scrolling */
+}
 
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;  
+  padding-bottom: 0%;
+  margin-bottom: 0%; 
 }
 
 .features {
@@ -24,7 +29,7 @@
 }
 
 .feature {
-  width: 250px; /* Set a consistent width for all feature boxes */
+  width: 250px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -38,4 +43,24 @@
 
 .feature p {
   margin-bottom: 0;
+  margin-bottom: 0;
+}
+
+.about-us {
+  /* border-top: 1px solid #ccc; */
+  text-align: justify;
+  min-width: 100%;
+   padding-top: 0%;
+  margin-top: 0%; 
+}
+
+.about-us h2 {
+  margin-top: 0;
+  justify-content: center;
+  text-align: center;
+}
+
+.about-us p {
+  margin-bottom: 0;
+  line-height: 1.6;
 }
