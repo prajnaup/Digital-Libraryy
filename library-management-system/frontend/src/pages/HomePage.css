@@ -76,6 +76,9 @@
 .feature p {
   margin-bottom: 0;
 }
+.feature a {
+  color: #fff;
+}
 
 .about-us {
   text-align: justify;
