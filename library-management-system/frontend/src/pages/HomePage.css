@@ -1,9 +1,11 @@
 .homepage {
   display: flex;
+  background-image: url('https://img.freepik.com/free-photo/abstract-digital-grid-black-background_53876-97647.jpg');
+  background-size: cover;
+  background-position: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-   /* height: 100vh;  */
   text-align: center;
   padding: 20px;
   overflow-y: auto; /* Enable scrolling */
@@ -19,6 +21,36 @@
   padding-bottom: 0%;
   margin-bottom: 0%; 
 }
+.main-content h1,p {
+  margin-top: 0;
+  color: #fff;
+} 
+
+.search-bar {
+  display: flex;
+  margin-top: 20px;
+}
+
+.search-bar input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  width: 300px;
+}
+
+.search-bar button {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 4px 4px 0;
+  background-color: #333;
+  color: #fff;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #555;
+}
 
 .features {
   display: flex;
@@ -29,7 +61,7 @@
 }
 
 .feature {
-  width: 250px;
+  width: 300px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -43,14 +75,12 @@
 
 .feature p {
   margin-bottom: 0;
-  margin-bottom: 0;
 }
 
 .about-us {
-  /* border-top: 1px solid #ccc; */
   text-align: justify;
   min-width: 100%;
-   padding-top: 0%;
+  padding-top: 0%;
   margin-top: 0%; 
 }
 
@@ -58,6 +88,7 @@
   margin-top: 0;
   justify-content: center;
   text-align: center;
+  color: #fff;
 }
 
 .about-us p {

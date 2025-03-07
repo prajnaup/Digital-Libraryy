@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './HomePage.css'; 
+
 const HomePage = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    // Implement search functionality here
+    console.log('Search query:', searchQuery);
+  };
+
   return (
     <div className="homepage">
       <div className="main-content">
         <h1>Welcome to Digital Library</h1>
         <p>Discover a world of books and manage your reading experience with ease.</p>
+        <form className="search-bar" onSubmit={handleSearchSubmit}>
+          <input 
+            type="text" 
+            placeholder="Search for books..." 
+            value={searchQuery} 
+            onChange={handleSearchChange} 
+          />
+          <button type="submit">Search</button>
+        </form>
         <div className="features">
           <div className="feature">
             <h2><Link to="/books">Browse Books</Link></h2>
