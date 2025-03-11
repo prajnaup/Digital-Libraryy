@@ -50,6 +50,15 @@ const HomePage = () => {
           National Digital Library of India (NDLI) is a virtual repository of learning resources which is not just a repository with search/browse facilities but provides a host of services for the learner community. It is sponsored and mentored by Ministry of Education, Government of India, through its National Mission on Education through Information and Communication Technology (NMEICT). Filtered and federated searching is employed to facilitate focused searching so that learners can find the right resource with least effort and in minimum time. NDLI provides user group-specific services such as Examination Preparatory for School and College students and job aspirants. Services for Researchers and general learners are also provided. NDLI is designed to hold content of any language and provides interface support for 10 most widely used Indian languages. It is built to provide support for all academic levels including researchers and life-long learners, all disciplines, all popular forms of access devices and differently-abled learners. It is designed to enable people to learn and prepare from best practices from all over the world and to facilitate researchers to perform inter-linked exploration from multiple sources. It is developed, operated and maintained from Indian Institute of Technology Kharagpur.
         </p>
       </div>
+      <div className="footer">
+        <h2>Follow Us On</h2>
+        <div className="social-links">
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
+          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+        <p>&copy; 2025 Digital Library. All rights reserved.</p>
+      </div>
     </div>
   );
 };

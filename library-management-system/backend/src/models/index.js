@@ -15,6 +15,15 @@ const bookSchema = new mongoose.Schema({
   reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
 });
 
+const book1Schema = new mongoose.Schema({
+  book: { type: String, required: true },
+  author: { type: String, required: true },
+  published: { type: Number, required: true },
+  // genre: { type: String },
+  // price: { type: Number, required: true },
+  // reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
+});
+
 const reviewSchema = new mongoose.Schema({
   bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
@@ -29,6 +38,7 @@ const wishlistSchema = new mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 const Book = mongoose.model('Book', bookSchema);
+const Book1 = mongoose.model('Book1', book1Schema);
 const Review = mongoose.model('Review', reviewSchema);
 const Wishlist = mongoose.model('Wishlist', wishlistSchema);
 
