@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api'; // Adjust the API URL as needed
+const API_URL = 'http://localhost:3000/api';
 
 export const signUp = async (userData) => {
   try {

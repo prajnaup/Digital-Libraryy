@@ -5,7 +5,7 @@ const ReviewPage = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/books/:id/reviews') // Replace :id with the actual book ID
+    axios.get('/api/books/:id/reviews')
       .then(response => {
         setReviews(response.data);
       })
