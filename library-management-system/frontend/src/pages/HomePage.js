@@ -53,9 +53,15 @@ const HomePage = () => {
       <div className="footer">
         <h2>Follow Us On</h2>
         <div className="social-links">
-          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
-          <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
-          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+            <img src="instagram.png" alt="Instagram" style={{ width: '30px', height: '30px' }} />
+          </a>
+          <a href="https://www.twitter.com" target="_blank" rel="noopener noreferrer">
+            <img src="twitter.png" alt="Twitter" style={{ width: '30px', height: '30px' }} />
+          </a>
+          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer">
+            <img src="linkedin.png" alt="LinkedIn" style={{ width: '30px', height: '30px' }} />
+          </a>
         </div>
         <p>&copy; 2025 Digital Library. All rights reserved.</p>
       </div>
