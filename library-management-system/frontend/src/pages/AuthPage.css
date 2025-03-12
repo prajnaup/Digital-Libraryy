@@ -5,7 +5,18 @@
   justify-content: center;
   height: 100vh;
   text-align: center;
-  padding: 20px;
+  padding: 0px;
+  background-image: url('https://img.freepik.com/free-photo/abstract-digital-grid-black-background_53876-97647.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.auth-page h1 {
+  color: #fff;
+}
+
+.auth-page a {
+  color: #fff;
 }
 
 .auth-form {
@@ -13,6 +24,7 @@
   flex-direction: column;
   gap: 15px;
   width: 300px;
+  padding-bottom: 15px;
 }
 
 .auth-form input {
