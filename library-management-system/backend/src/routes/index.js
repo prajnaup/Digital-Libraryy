@@ -12,6 +12,7 @@ router.post('/books', BookController.createBook);
 router.get('/books/:id', BookController.getBook);
 router.put('/books/:id', BookController.updateBook);
 router.delete('/books/:id', BookController.deleteBook);
+router.get('/search/books', BookController.searchBooks); // Add this line
 
 // Review routes
 router.post('/books/:id/reviews', ReviewController.createReview);

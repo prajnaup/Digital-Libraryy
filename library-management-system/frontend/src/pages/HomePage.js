@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import './HomePage.css'; 
 
 const HomePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const history = useHistory();
 
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
@@ -11,8 +12,7 @@ const HomePage = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    // Implement search functionality here
-    console.log('Search query:', searchQuery);
+    history.push(`/books?query=${searchQuery}`);
   };
 
   return (
