@@ -31,7 +31,7 @@ const HomePage = () => {
         </form>
         <div className="features">
           <div className="feature">
-            <h2><Link to="/books">Browse Books</Link></h2>
+            <h2><Link to="/books">Browse Books</Link></h2> 
             <p>Explore our extensive collection of books.</p>
           </div>
           <div className="feature">

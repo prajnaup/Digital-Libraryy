@@ -1,14 +1,22 @@
 const Book = require('../models').Book;
 
 module.exports = {
+
   getAllBooks: async (req, res) => {
     try {
+      console.log("Fetching books..."); // Debugging
       const books = await Book.find();
+      console.log("Books found:", books); // Debugging
+      if (!books.length) {
+        return res.status(204).send("No books found");
+      }
       res.status(200).json(books);
     } catch (error) {
+      console.log("Error fetching books:", error);
       res.status(500).send(error.message);
     }
   },
+  
   getBook: async (req, res) => {
     try {
       const book = await Book.findById(req.params.id);
@@ -70,4 +78,5 @@ module.exports = {
       res.status(500).send(error.message);
     }
   }
+
 };

@@ -17,7 +17,7 @@ function App() {
           <Route path="/" exact component={HomePage} />
           <Route path="/signup" component={SignUpPage} />
           <Route path="/signin" component={SignInPage} />
-          <Route path="/books" component={BookDisplayPage} />
+          <Route path="/books" component={BookDisplayPage} /> {/* Ensure this route is correct */}
           <Route path="/reviews" component={ReviewPage} />
           <Route path="/wishlist" component={WishlistPage} />
         </Switch>

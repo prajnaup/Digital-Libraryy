@@ -9,10 +9,11 @@ const userSchema = new mongoose.Schema({
 
 const bookSchema = new mongoose.Schema({
   title: { type: String, required: true },
+  bookid: { type: String, required: true, unique: true },
   author: { type: String, required: true },
-  genre: { type: String },
+  genre: { type: String, required: true },
   price: { type: Number, required: true },
-  reviews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Review' }]
+  reviews: [{ type: String }]
 });
 
 const reviewSchema = new mongoose.Schema({

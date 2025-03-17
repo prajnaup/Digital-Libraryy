@@ -1,7 +1,7 @@
 import React from 'react';
 import SignUp from './SignUp';
 import SignIn from './SignIn';
-import BookDisplay from './BookDisplay';
+import BookDisplayPage from './books';
 import Review from './Review';
 import Wishlist from './Wishlist';
 
@@ -11,7 +11,7 @@ const IndexPage = () => {
       <h1>Library Management System</h1>
       <SignUp />
       <SignIn />
-      <BookDisplay />
+      <BookDisplayPage />
       <Review />
       <Wishlist />
     </div>

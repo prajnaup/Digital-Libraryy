@@ -1,29 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import './BookDisplayPage.css'; 
 
 const BookDisplayPage = () => {
   const [books, setBooks] = useState([]);
-  const location = useLocation();
 
   useEffect(() => {
-    const query = new URLSearchParams(location.search).get('query');
-    const url = query ? `/api/search/books?query=${query}` : '/api/books';
-    axios.get(url)
+    axios.get('http://localhost:5000/books')
       .then(response => {
         setBooks(response.data);
       })
       .catch(error => {
         console.error('There was an error fetching the books!', error);
       });
-  }, [location.search]);
+  }, []);
 
   return (
-    <div>
+    <div className="book-display-page">
       <h1>Books</h1>
-      <ul>
+      <ul className="book-list">
         {books.map(book => (
-          <li key={book._id}>{book.title} by {book.author}</li>
+          <li key={book._id} className="book-item">
+            <h2>{book.title}</h2>
+            <p>by {book.author}</p>
+            <p>Book ID: {book.bookid}</p>
+            <p>Genre: {book.genre}</p>
+            <p>Price: ₹{book.price}</p>
+          </li>
         ))}
       </ul>
     </div>

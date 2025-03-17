@@ -1,0 +1,32 @@
+.book-display-page {
+  padding: 20px;
+  text-align: center;
+  margin-top: 20px;
+  
+}
+
+
+
+.book-list {
+  list-style: none;
+  padding: 0;
+}
+
+.book-item {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.book-item h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.book-item p {
+  margin: 5px 0 0;
+  font-size: 1em;
+  color: #555;
+}
