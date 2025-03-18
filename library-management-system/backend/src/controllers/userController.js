@@ -52,6 +52,14 @@ module.exports = {
       await newUser.save();
       res.status(201).json(newUser);
     } catch (error) {
+      if (error.code === 11000) {
+        if (error.keyPattern.username) {
+          return res.status(400).send('Username already exists');
+        }
+        if (error.keyPattern.email) {
+          return res.status(400).send('Email already exists');
+        }
+      }
       res.status(500).send(error.message);
     }
   },
@@ -59,7 +67,7 @@ module.exports = {
   signIn: async (req, res) => {
     try {
       const user = await User.findOne({ email: req.body.email });
-      if (!user || user.password !== req.body.password) {
+      if (!user || !(await user.comparePassword(req.body.password))) {
         return res.status(401).send('Invalid email or password');
       }
       res.status(200).json(user);

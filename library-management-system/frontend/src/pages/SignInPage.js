@@ -17,7 +17,7 @@ const SignInPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post('/api/signin', formData)
+    axios.post('http://localhost:5000/signin', formData)
       .then(response => {
         console.log('User signed in:', response.data);
       })
