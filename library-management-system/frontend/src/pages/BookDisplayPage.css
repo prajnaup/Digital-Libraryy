@@ -44,6 +44,10 @@
   color: #333;
 }
 
+.book-item h2 a {
+  text-decoration: none;
+}
+
 .book-item p {
   margin: 5px 0;
   font-size: 1em;
