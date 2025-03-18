@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './BookDisplayPage.css'; 
+import { Link } from 'react-router-dom';
+import './BookDisplayPage.css';
 
 const BookDisplayPage = () => {
   const [books, setBooks] = useState([]);
@@ -18,16 +19,16 @@ const BookDisplayPage = () => {
   return (
     <div className="book-display-page">
       <h1>Books</h1>
-    <ul className="book-list">
+      <ul className="book-list">
         {books.map(book => (
           <li key={book._id} className="book-item">
-            <h2>{book.title}</h2>
+            <h2><Link to={`/books/${book._id}`}>{book.title}</Link></h2>
             <p>by {book.author}</p>
             <p>Book ID: {book.bookid}</p>
             <p>Genre: {book.genre}</p>
           </li>
         ))}
-      </ul> 
+      </ul>
     </div>
   );
 };

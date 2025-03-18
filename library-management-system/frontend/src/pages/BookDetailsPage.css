@@ -1,0 +1,24 @@
+.book-details-page {
+  padding: 20px;
+  text-align: center;
+  background-color: #f0f0f0;
+  min-height: 100vh;
+  background-image: url('https://img.freepik.com/free-photo/abstract-digital-grid-black-background_53876-97647.jpg');
+  background-size: cover;
+  background-position: center;
+  margin-top: 20px;
+}
+
+.about {
+  text-align: justify;
+}
+
+.book-details-page h1 {
+  color: #fff;
+ 
+}
+
+.book-details-page p {
+  color: #fff;
+  font-size: 1.2em;
+}
