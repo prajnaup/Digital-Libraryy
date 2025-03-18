@@ -13,7 +13,8 @@ const bookSchema = new mongoose.Schema({
   author: { type: String, required: true },
   genre: { type: String, required: true },
   reviews: [{ type: String }],
-  about: { type: String, required: true }
+  about: { type: String, required: true },
+  image: { type: String, required: true }
 });
 
 const reviewSchema = new mongoose.Schema({
