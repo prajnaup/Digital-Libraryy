@@ -7,6 +7,7 @@ const SignInPage = () => {
     username: '',
     password: ''
   });
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -20,9 +21,15 @@ const SignInPage = () => {
     axios.post('http://localhost:5000/signin', formData)
       .then(response => {
         console.log('User signed in:', response.data);
+        setErrorMessage(''); // Clear error message on success
       })
       .catch(error => {
         console.error('There was an error signing in!', error);
+        if (error.response && error.response.status === 401) {
+          setErrorMessage('Invalid credentials');
+        } else {
+          setErrorMessage('There was an error signing in!');
+        }
       });
   };
 
@@ -34,6 +41,7 @@ const SignInPage = () => {
         <input type="password" name="password" placeholder="Password" value={formData.password} onChange={handleChange} required />
         <button type="submit">Sign In</button>
       </form>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <p><a href="/signup">New User? Register here</a></p>
     </div>
   );
