@@ -66,9 +66,9 @@ module.exports = {
 
   signIn: async (req, res) => {
     try {
-      const user = await User.findOne({ email: req.body.email });
+      const user = await User.findOne({ username: req.body.username });
       if (!user || !(await user.comparePassword(req.body.password))) {
-        return res.status(401).send('Invalid email or password');
+        return res.status(401).send('Invalid username or password');
       }
       res.status(200).json(user);
     } catch (error) {
