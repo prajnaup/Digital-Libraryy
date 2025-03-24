@@ -34,10 +34,10 @@ const HomePage = () => {
             <h2><Link to="/books">Browse Books</Link></h2> 
             <p>Explore our extensive collection of books.</p>
           </div>
-          <div className="feature">
+          {/* <div className="feature">
             <h2><Link to="/reviews">Community Reviews</Link></h2>
             <p>Read reviews and ratings from other readers.</p>
-          </div>
+          </div> */}
           <div className="feature">
             <h2><Link to="/wishlist">Manage Wishlist</Link></h2>
             <p>Keep track of books you want to read or purchase.</p>
