@@ -39,9 +39,8 @@ const BookDetailsPage = () => {
           <ul>
             {book.reviews.map((review, index) => (
               <li key={index}>
-                <p><strong>Username:</strong> {review.userId.username}</p>
-                <p><strong>Rating:</strong> {renderStars(review.rating)}</p>
-                <p><strong>Comment:</strong> {review.comment}</p>
+                <p><strong>{review.userId.username}</strong>: {renderStars(review.rating)}</p>
+                <p>{review.comment}</p>
               </li>
             ))}
           </ul>
