@@ -29,7 +29,7 @@ const SignUpPage = () => {
     axios.post('http://localhost:5000/signup', formData)
       .then(response => {
         console.log('User signed up:', response.data);
-        setErrorMessage(''); // Clear error message on success
+        setErrorMessage(''); 
       })
       .catch(error => {
         console.error('There was an error signing up!', error);

@@ -21,7 +21,7 @@ const SignInPage = () => {
     axios.post('http://localhost:5000/signin', formData)
       .then(response => {
         console.log('User signed in:', response.data);
-        setErrorMessage(''); // Clear error message on success
+        setErrorMessage(''); 
       })
       .catch(error => {
         console.error('There was an error signing in!', error);

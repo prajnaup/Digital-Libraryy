@@ -4,9 +4,9 @@ module.exports = {
 
   getAllBooks: async (req, res) => {
     try {
-      console.log("Fetching books..."); // Debugging
+      console.log("Fetching books..."); 
       const books = await Book.find();
-      console.log("Books found:", books); // Debugging
+      console.log("Books found:", books); 
       if (!books.length) {
         return res.status(204).send("No books found");
       }
@@ -19,15 +19,16 @@ module.exports = {
   
   getBook: async (req, res) => {
     try {
-      const book = await Book.findById(req.params.id);
-      if (!book) {
-        return res.status(404).send('Book not found');
-      }
-      res.status(200).json(book);
+        const book = await Book.findById(req.params.id).populate('reviews.userId', 'username');
+        if (!book) {
+            return res.status(404).send('Book not found');
+        }
+        res.status(200).json(book);
     } catch (error) {
-      res.status(500).send(error.message);
+        res.status(500).send(error.message);
     }
-  },
+},
+
   
   createBook: async (req, res) => {
     try {

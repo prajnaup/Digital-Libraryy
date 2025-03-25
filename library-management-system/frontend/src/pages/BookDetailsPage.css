@@ -28,3 +28,34 @@
   max-height: 400px;
   margin-bottom: 20px;
 }
+
+.reviews {
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.reviews h2 {
+  margin-top: 0;
+  color: #fff;
+}
+
+.reviews ul {
+  list-style: none;
+  padding: 0;
+}
+
+.reviews li {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-bottom: 1px solid;
+}
+
+.reviews li:last-child {
+  border-bottom: none;
+}
+
+.reviews p {
+  margin: 5px 0;
+  color: #fff;
+}

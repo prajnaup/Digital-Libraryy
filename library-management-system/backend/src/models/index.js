@@ -30,7 +30,11 @@ const bookSchema = new mongoose.Schema({
   bookid: { type: String, required: true, unique: true },
   author: { type: String, required: true },
   genre: { type: String, required: true },
-  reviews: [{ type: String }],
+  reviews: [{
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    rating: { type: Number },
+    comment: { type: String }
+  }],
   about: { type: String, required: true },
   image: { type: String, required: true }
 });
