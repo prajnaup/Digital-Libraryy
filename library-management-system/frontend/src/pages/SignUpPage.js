@@ -1,9 +1,6 @@
-// filepath: /c:/Users/prajn/OneDrive/Desktop/workspace/library-management-system/frontend/src/pages/SignUpPage.js
-
 import React, { useState } from 'react';
 import axios from 'axios';
-import './AuthPage.css'; // Import the CSS file for styling
-
+import './AuthPage.css'; 
 const SignUpPage = () => {
   const [formData, setFormData] = useState({
     username: '',
@@ -12,6 +9,7 @@ const SignUpPage = () => {
     email: ''
   });
   const [errorMessage, setErrorMessage] = useState('');
+  const [notification, setNotification] = useState(''); 
 
   const handleChange = (e) => {
     setFormData({
@@ -29,7 +27,13 @@ const SignUpPage = () => {
     axios.post('http://localhost:5000/signup', formData)
       .then(response => {
         console.log('User signed up:', response.data);
-        setErrorMessage(''); 
+        localStorage.setItem('token', response.data.token); 
+        setErrorMessage('');
+        setNotification('Successfully signed up!'); 
+        setTimeout(() => {
+          setNotification('');
+          window.location.href = '/'; 
+        }, 3000);
       })
       .catch(error => {
         console.error('There was an error signing up!', error);
@@ -52,6 +56,7 @@ const SignUpPage = () => {
         <button type="submit">Sign Up</button>
       </form>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
+      {notification && <div className="notification">{notification}</div>}
     </div>
   );
 };
