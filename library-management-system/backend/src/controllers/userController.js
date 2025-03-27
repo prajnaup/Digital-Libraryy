@@ -1,4 +1,6 @@
 const User = require('../models').User;
+const jwt = require('jsonwebtoken');
+const config = require('../config');
 
 module.exports = {
   getUser: async (req, res) => {
@@ -70,7 +72,8 @@ module.exports = {
       if (!user || !(await user.comparePassword(req.body.password))) {
         return res.status(401).send('Invalid username or password');
       }
-      res.status(200).json(user);
+      const token = jwt.sign({ id: user._id }, config.jwtSecret, { expiresIn: '1h' });
+      res.status(200).json({ user, token });
     } catch (error) {
       res.status(500).send(error.message);
     }

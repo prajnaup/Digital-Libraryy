@@ -21,7 +21,9 @@ const SignInPage = () => {
     axios.post('http://localhost:5000/signin', formData)
       .then(response => {
         console.log('User signed in:', response.data);
-        setErrorMessage(''); 
+        localStorage.setItem('token', response.data.token); // Store token
+        setErrorMessage('');
+        window.location.href = '/'; // Redirect to homepage
       })
       .catch(error => {
         console.error('There was an error signing in!', error);
