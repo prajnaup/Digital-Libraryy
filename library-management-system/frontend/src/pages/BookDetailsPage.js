@@ -34,14 +34,14 @@ const BookDetailsPage = () => {
   const handleAddReview = () => {
     const token = localStorage.getItem('token');
     axios.post(`http://localhost:5000/books/${id}/reviews`, { comment: review, rating }, {
-      headers: { Authorization: `Bearer ${token}` } // Include token in headers
+      headers: { Authorization: `Bearer ${token}` } 
     })
       .then(() => {
         alert('Review added successfully!');
         setReview('');
         setRating(0);
         setShowModal(false);
-        window.location.reload(); // Reload to fetch updated reviews
+        window.location.reload(); 
       })
       .catch(error => {
         console.error('Error adding review:', error);

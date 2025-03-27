@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './AuthPage.css'; // Import the CSS file for styling
+import './AuthPage.css'; 
 
 const SignInPage = () => {
   const [formData, setFormData] = useState({
@@ -21,9 +21,9 @@ const SignInPage = () => {
     axios.post('http://localhost:5000/signin', formData)
       .then(response => {
         console.log('User signed in:', response.data);
-        localStorage.setItem('token', response.data.token); // Store token
+        localStorage.setItem('token', response.data.token); 
         setErrorMessage('');
-        window.location.href = '/'; // Redirect to homepage
+        window.location.href = '/'; 
       })
       .catch(error => {
         console.error('There was an error signing in!', error);

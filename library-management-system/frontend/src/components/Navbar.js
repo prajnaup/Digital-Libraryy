@@ -9,18 +9,18 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    setToken(null); // Update the state to trigger re-render
+    setToken(null); 
     setNotification('Successfully logged out');
-    setTimeout(() => setNotification(''), 3000); // Clear notification after 3 seconds
+    setTimeout(() => setNotification(''), 3000);
     history.push('/signin');
   };
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    setToken(storedToken); // Sync state with localStorage
+    setToken(storedToken); 
     if (storedToken) {
       setNotification('Successfully logged in');
-      setTimeout(() => setNotification(''), 3000); // Clear notification after 3 seconds
+      setTimeout(() => setNotification(''), 3000); 
     }
   }, []);
 
