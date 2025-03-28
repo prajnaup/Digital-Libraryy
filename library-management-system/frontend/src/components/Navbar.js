@@ -9,6 +9,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('loginNotificationShown'); 
     setToken(null); 
     setNotification('Successfully logged out');
     setTimeout(() => setNotification(''), 3000);
@@ -17,11 +18,15 @@ const Navbar = () => {
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
-    setToken(storedToken); 
-    if (storedToken) {
+    const loginNotificationShown = localStorage.getItem('loginNotificationShown');
+
+    if (storedToken && !loginNotificationShown) {
       setNotification('Successfully logged in');
-      setTimeout(() => setNotification(''), 3000); 
+      setTimeout(() => setNotification(''), 3000);
+      localStorage.setItem('loginNotificationShown', 'true');
     }
+
+    setToken(storedToken);
   }, []);
 
   return (

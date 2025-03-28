@@ -79,17 +79,17 @@ line-height: 0;
 
 
 .notification {
-  position: fixed;
+  position: fixed; 
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #333;
-  color: #fff;
+  background-color: #f0efed;
+  color: #211e21;
   padding: 10px 20px;
   border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgb(170, 222, 237);
   z-index: 1000;
-  animation: fadeInOut 3s ease-in-out;
+  animation: fadeInOut 5s ease-in-out;
 }
 
 @keyframes fadeInOut {

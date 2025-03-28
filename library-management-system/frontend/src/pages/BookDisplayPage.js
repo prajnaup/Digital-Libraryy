@@ -22,10 +22,11 @@ const BookDisplayPage = () => {
       <ul className="book-list">
         {books.map(book => (
           <li key={book._id} className="book-item">
+            <img src={book.image} alt={book.title} />
             <h2><Link to={`/books/${book._id}`}>{book.title}</Link></h2>
-            <p>by {book.author}</p>
+            {/* <p>by {book.author}</p>
             <p>Book ID: {book.bookid}</p>
-            <p>Genre: {book.genre}</p>
+            <p>Genre: {book.genre}</p> */}
           </li>
         ))}
       </ul>

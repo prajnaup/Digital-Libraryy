@@ -39,6 +39,24 @@ const bookSchema = new mongoose.Schema({
   image: { type: String, required: true }
 });
 
+bookSchema.pre('find', function (next) {
+  this.populate({
+    path: 'reviews.userId',
+    select: 'username',
+    match: {} 
+  });
+  next();
+});
+
+bookSchema.pre('findOne', function (next) {
+  this.populate({
+    path: 'reviews.userId',
+    select: 'username',
+    match: {} 
+  });
+  next();
+});
+
 const reviewSchema = new mongoose.Schema({
   bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },

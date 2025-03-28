@@ -10,6 +10,7 @@ const BookDetailsPage = () => {
   const [rating, setRating] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [warning, setWarning] = useState('');
+  const [notification, setNotification] = useState('');
 
   useEffect(() => {
     axios.get(`http://localhost:5000/books/${id}`)
@@ -33,18 +34,23 @@ const BookDetailsPage = () => {
 
   const handleAddReview = () => {
     const token = localStorage.getItem('token');
-    axios.post(`http://localhost:5000/books/${id}/reviews`, { comment: review, rating }, {
+    axios.post(`http://localhost:5000/books/${id}/reviews`, { comment: review, rating: parseInt(rating) }, {
       headers: { Authorization: `Bearer ${token}` } 
     })
-      .then(() => {
-        alert('Review added successfully!');
+      .then((response) => {
+        setNotification('Review added successfully!');
+        setTimeout(() => setNotification(''), 3000);
+        setBook((prevBook) => ({
+          ...prevBook,
+          reviews: [...prevBook.reviews, response.data]
+        }));
         setReview('');
         setRating(0);
         setShowModal(false);
-        window.location.reload(); 
       })
       .catch(error => {
         console.error('Error adding review:', error);
+        alert('Failed to add review. Please try again.');
       });
   };
 
@@ -64,11 +70,11 @@ const BookDetailsPage = () => {
       <p><strong>Author:</strong> {book.author}</p>
       <p><strong>Genre:</strong> {book.genre}</p>
       <p className="about"><strong></strong> {book.about}</p>
-      {book.reviews && book.reviews.length > 0 ? (
+      {book.reviews && book.reviews.filter(review => review.userId).length > 0 ? (
         <div className="reviews">
           <h2>Reviews</h2>
           <ul>
-            {book.reviews.map((review, index) => (
+            {book.reviews.filter(review => review.userId).map((review, index) => (
               <li key={index}>
                 <p><strong>{review.userId.username}</strong>: {renderStars(review.rating)}</p>
                 <p>{review.comment}</p>
@@ -102,6 +108,7 @@ const BookDetailsPage = () => {
           </div>
         </div>
       )}
+      {notification && <div className="notification">{notification}</div>}
     </div>
   );
 };

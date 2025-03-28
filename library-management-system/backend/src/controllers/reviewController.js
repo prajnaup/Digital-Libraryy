@@ -1,4 +1,4 @@
-const Review = require('../models').Review;
+const { Book, Review } = require('../models');
 
 module.exports = {
   getReview: async (req, res) => {
@@ -15,11 +15,31 @@ module.exports = {
   
   createReview: async (req, res) => {
     try {
-      const newReview = new Review(req.body);
-      await newReview.save();
+      const { id } = req.params; 
+      const { rating, comment } = req.body;
+
+  
+      const newReview = {
+        userId: req.user.id, 
+        rating,
+        comment,
+      };
+
+     
+      const updatedBook = await Book.findByIdAndUpdate(
+        id,
+        { $push: { reviews: newReview } },
+        { new: true }
+      ).populate('reviews.userId', 'username');
+
+      if (!updatedBook) {
+        return res.status(404).send('Book not found');
+      }
+
       res.status(201).json(newReview);
     } catch (error) {
-      res.status(500).send(error.message);
+      console.error('Error adding review:', error);
+      res.status(500).send('Failed to add review');
     }
   },
 
