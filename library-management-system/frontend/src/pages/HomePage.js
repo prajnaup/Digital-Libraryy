@@ -40,7 +40,7 @@ const HomePage = () => {
           </div> */}
           <div className="feature">
             <h2><Link to="/wishlist">Manage Wishlist</Link></h2>
-            <p>Keep track of books you want to read or purchase.</p>
+            <p>Keep track of books you want to read.</p>
           </div>
         </div> 
       </div>
