@@ -18,25 +18,24 @@ module.exports = {
       const { id } = req.params; 
       const { rating, comment } = req.body;
 
-  
       const newReview = {
         userId: req.user.id, 
         rating,
         comment,
       };
 
-     
       const updatedBook = await Book.findByIdAndUpdate(
         id,
         { $push: { reviews: newReview } },
         { new: true }
-      ).populate('reviews.userId', 'username');
+      ).populate('reviews.userId', 'username'); 
 
       if (!updatedBook) {
         return res.status(404).send('Book not found');
       }
 
-      res.status(201).json(newReview);
+      const addedReview = updatedBook.reviews[updatedBook.reviews.length - 1]; // Get the newly added review
+      res.status(201).json(addedReview);
     } catch (error) {
       console.error('Error adding review:', error);
       res.status(500).send('Failed to add review');
