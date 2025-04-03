@@ -19,5 +19,6 @@ router.get('/books/:id/reviews', ReviewController.getReview);
 
 router.post('/wishlist', authMiddleware, WishlistController.createBook);
 router.get('/wishlist', authMiddleware, WishlistController.getBook);
+router.delete('/wishlist/:bookId', authMiddleware, WishlistController.removeBook);
 
 module.exports = router;

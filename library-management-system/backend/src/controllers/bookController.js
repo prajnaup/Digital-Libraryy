@@ -67,11 +67,12 @@ module.exports = {
   searchBooks: async (req, res) => {
     try {
       const { query } = req.query;
-      const books = await Book.find({ 
+      const books = await Book.find({
         $or: [
           { title: { $regex: query, $options: 'i' } },
           { author: { $regex: query, $options: 'i' } },
-          { genre: { $regex: query, $options: 'i' } }
+          { genre: { $regex: query, $options: 'i' } },
+          { bookid: { $regex: query, $options: 'i' } }
         ]
       });
       res.status(200).json(books);

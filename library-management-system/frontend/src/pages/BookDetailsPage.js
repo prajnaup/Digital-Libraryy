@@ -54,6 +54,26 @@ const BookDetailsPage = () => {
       });
   };
 
+  const handleAddToWishlist = () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setWarning('Please log in to add this book to your wishlist.');
+      return;
+    }
+    setWarning('');
+    axios.post(`http://localhost:5000/wishlist`, { bookId: id }, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then((response) => {
+        setNotification('Book added to wishlist successfully!');
+        setTimeout(() => setNotification(''), 3000);
+      })
+      .catch(error => {
+        console.error('Error adding book to wishlist:', error);
+        alert('Failed to add book to wishlist. Please try again.');
+      });
+  };
+
   if (!book) {
     return <div>Loading...</div>;
   }
@@ -86,6 +106,8 @@ const BookDetailsPage = () => {
         <p>No reviews available for this book.</p>
       )}
       <button className="add-review-button" onClick={handleAddReviewClick}>Add Review</button>
+      <span style={{ margin: '0 10px' }}></span> 
+      <button className="add-review-button" onClick={handleAddToWishlist}>Add to Wishlist</button>
       {warning && <p className="warning">{warning}</p>}
       {showModal && (
         <div className="modal">

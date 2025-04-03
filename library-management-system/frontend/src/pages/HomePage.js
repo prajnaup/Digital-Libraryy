@@ -12,7 +12,7 @@ const HomePage = () => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    history.push(`/books?query=${searchQuery}`);
+    history.push(`/books?query=${encodeURIComponent(searchQuery)}`); 
   };
 
   return (
