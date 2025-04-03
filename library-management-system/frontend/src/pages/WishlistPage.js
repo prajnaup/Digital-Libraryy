@@ -10,7 +10,7 @@ const WishlistPage = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      history.push('/signin'); // Redirect to login page if not logged in
+      history.push('/signin'); 
       return;
     }
     axios.get('http://localhost:5000/wishlist', {
@@ -55,8 +55,8 @@ const WishlistPage = () => {
             <li key={item._id} className="wishlist-item">
               <img src={item.image} alt={item.title} />
               <h2><Link to={`/books/${item._id}`}>{item.title}</Link></h2>
-              <p>by {item.author}</p>
-              <p className="price">Genre: {item.genre}</p>
+              {/* <p>by {item.author}</p>
+              <p className="price">Genre: {item.genre}</p> */}
               <button onClick={() => handleRemoveFromWishlist(item._id)}>Remove</button>
             </li>
           ))}

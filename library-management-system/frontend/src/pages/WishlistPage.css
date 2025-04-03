@@ -26,6 +26,8 @@ h1 {
   width: 200px;
   text-align: center;
   transition: transform 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 
 .wishlist-item:hover {
@@ -43,6 +45,7 @@ h1 {
   margin: 0;
   font-size: 1.2em;
   color: #fff;
+  margin-bottom: 10px;
 }
 
 .wishlist-item h2 a {
@@ -60,10 +63,10 @@ h1 {
   color: #ccc;
 }
 
-.wishlist-item p.price {
+/* .wishlist-item p.price {
   font-weight: bold;
   color: #fff;
-}
+} */
 .wishlist-item button {
   padding: 10px 20px;
   background-color: #027742;
@@ -72,6 +75,9 @@ h1 {
   border-radius: 4px;
   cursor: pointer;
   transition: background-color 0.3s;
+  margin-top: auto;
+  width: 120px;
+  align-self: center;
 }
 
 .wishlist-container{
