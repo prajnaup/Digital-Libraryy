@@ -8,6 +8,7 @@ import BookDetailsPage from './pages/BookDetailsPage';
 import ReviewPage from './pages/ReviewPage';
 import WishlistPage from './pages/WishlistPage';
 import MyAccountPage from './pages/MyAccountPage';
+import AdminPage from './pages/AdminPage';
 import Navbar from './components/Navbar';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Route path="/reviews" component={ReviewPage} />
           <Route path="/wishlist" component={WishlistPage} />
           <Route path="/my-account" component={MyAccountPage} />
+          <Route path="/admin" component={AdminPage} />
         </Switch>
       </div>
     </Router>

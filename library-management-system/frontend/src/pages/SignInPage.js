@@ -22,8 +22,13 @@ const SignInPage = () => {
       .then(response => {
         console.log('User signed in:', response.data);
         localStorage.setItem('token', response.data.token); 
+        localStorage.setItem('role', response.data.role);
         setErrorMessage('');
-        window.location.href = '/'; 
+        if (response.data.role === 'admin') {
+          window.location.href = '/admin';
+        } else {
+          window.location.href = '/';
+        }
       })
       .catch(error => {
         console.error('There was an error signing in!', error);
