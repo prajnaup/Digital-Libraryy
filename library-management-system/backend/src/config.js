@@ -5,7 +5,7 @@ const config = {
     database: 'library_management_system',
     user: 'prajna07up',
     password: 'Loading@123',
-    databaseUrl: 'mongodb+srv://prajna07up:Loading@123@cluster0.ryzow.mongodb.net/digital_library?retryWrites=true&w=majority&appName=Cluster0'
+    databaseUrl: 'mongodb+srv://prajna07up:Loading%40123@cluster0.ryzow.mongodb.net/digital_library?retryWrites=true&w=majority&appName=Cluster0'
   },
   server: {
     port: 3000
