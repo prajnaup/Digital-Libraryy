@@ -5,10 +5,12 @@ import './AdminPage.css';
 
 const AdminPage = () => {
   const [books, setBooks] = useState([]);
-  const [newBook, setNewBook] = useState({ title: '', author: '', genre: '', bookid: '', about: '', image: '' });
+  const [newBook, setNewBook] = useState({ title: '', author: '', genre: '', bookid: '', about: '', image: '', copies: 1 }); // Added 'copies'
   const [editingBook, setEditingBook] = useState(null); 
   const [notification, setNotification] = useState(''); 
   const [confirmation, setConfirmation] = useState({ show: false, message: '', onConfirm: null });
+  const [requests, setRequests] = useState([]);
+  const [allRequests, setAllRequests] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
@@ -37,6 +39,18 @@ const AdminPage = () => {
     })
       .then(response => setBooks(response.data))
       .catch(error => console.error('Error fetching books:', error));
+
+    axios.get('http://localhost:5000/admin/requests', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(response => setRequests(response.data))
+      .catch(error => console.error('Error fetching requests:', error));
+
+    axios.get('http://localhost:5000/admin/all-requests', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(response => setAllRequests(response.data))
+      .catch(error => console.error('Error fetching all requests:', error));
   }, [history]);
 
   useEffect(() => {
@@ -64,7 +78,7 @@ const AdminPage = () => {
           setBooks([...books, response.data]);
           setNotification('Book added successfully!'); 
           setTimeout(() => setNotification(''), 3000); 
-          setNewBook({ title: '', author: '', genre: '', bookid: '', about: '', image: '' }); 
+          setNewBook({ title: '', author: '', genre: '', bookid: '', about: '', image: '', copies: 1 }); // Reset 'copies' to 1
         })
         .catch(error => console.error('Error adding book:', error));
     });
@@ -87,7 +101,7 @@ const AdminPage = () => {
           setNotification('Book updated successfully!'); 
           setTimeout(() => setNotification(''), 3000);
           setEditingBook(null);
-          setNewBook({ title: '', author: '', genre: '', bookid: '', about: '', image: '' }); 
+          setNewBook({ title: '', author: '', genre: '', bookid: '', about: '', image: '', copies: 1 }); // Reset 'copies' to 1
         })
         .catch(error => console.error('Error updating book:', error));
     });
@@ -95,7 +109,7 @@ const AdminPage = () => {
 
   const handleCancelEdit = () => {
     setEditingBook(null); 
-    setNewBook({ title: '', author: '', genre: '', bookid: '', about: '', image: '' }); 
+    setNewBook({ title: '', author: '', genre: '', bookid: '', about: '', image: '', copies: 1 }); // Reset 'copies' to 1
   };
 
   const handleDeleteBook = (id) => {
@@ -113,6 +127,20 @@ const AdminPage = () => {
     });
   };
 
+  const handleRequestAction = (requestId, action) => {
+    const token = localStorage.getItem('token');
+    if (['approved', 'disapproved', 'returned'].includes(action)) {
+      axios.put(`http://localhost:5000/admin/${action === 'returned' ? 'returns' : 'requests'}/${requestId}`, { status: action }, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(() => {
+          setRequests(requests.filter(request => request._id !== requestId)); 
+          setAllRequests(allRequests.filter(request => request._id !== requestId)); 
+        })
+        .catch(error => console.error(`Error updating ${action} request:`, error));
+    }
+  };
+
   return (
     <div className="admin-page">
       <h1 className="admin-title">Admin Page</h1>
@@ -125,6 +153,7 @@ const AdminPage = () => {
         <input type="text" name="bookid" placeholder="Book ID" value={newBook.bookid} onChange={handleInputChange} />
         <textarea name="about" placeholder="About" value={newBook.about} onChange={handleInputChange}></textarea>
         <input type="text" name="image" placeholder="Image URL" value={newBook.image} onChange={handleInputChange} />
+        <input type="number" name="copies" placeholder="Number of Copies" value={newBook.copies} onChange={handleInputChange} /> 
         {editingBook ? (
           <>
             <button className="admin-button" style={{ marginRight: '10px' }} onClick={handleUpdateBook}>Update Book</button>
@@ -146,6 +175,76 @@ const AdminPage = () => {
               </div>
             </li>
           ))}
+        </ul>
+      </div>
+      <div className="admin-section">
+        <h2>Book Requests</h2>
+        <ul>
+          {requests.length > 0 ? (
+            requests.map(request => (
+              <li key={request._id}>
+                <p>Book: {request.bookId.title}</p>
+                <p>Requested by: {request.userId.username}</p>
+                <button onClick={() => handleRequestAction(request._id, 'approved')}>Approve</button>
+                <span style={{ margin: '0 10px' }}></span> 
+                <button onClick={() => handleRequestAction(request._id, 'disapproved')}>Disapprove</button>
+              </li>
+            ))
+          ) : (
+            <p></p>
+          )}
+        </ul>
+      </div>
+      <div className="admin-section">
+        <h2>Confirm Returns</h2>
+        <ul>
+          {allRequests
+            .filter(request => request.status === 'return-pending') 
+            .map(request => (
+              <li key={request._id}>
+                <p>Book: {request.bookId.title}</p>
+                <p>Requested by: {request.userId.username}</p>
+                <button onClick={() => handleRequestAction(request._id, 'returned')}>Confirm Return</button>
+              </li>
+            ))}
+        </ul>
+      </div>
+      <div className="admin-section">
+        <h2>Pending Returns</h2>
+        <ul>
+          {allRequests
+            .filter(request => request.status === 'approved') 
+            .map(request => (
+              <li key={request._id}>
+                <p>Book: {request.bookId.title}</p>
+                <p>Requested by: {request.userId.username}</p>
+                {request.timestamp && (
+                  <p>Date Approved: {new Date(request.timestamp).toLocaleDateString()}</p>
+                )}
+              </li>
+            ))}
+        </ul>
+      </div>
+      <div className="admin-section">
+        <h2>History</h2>
+        <ul>
+          {allRequests
+            .filter(request => ['disapproved', 'returned'].includes(request.status)) 
+            .map(request => (
+              <li key={request._id}>
+                <p>Book: {request.bookId.title}</p>
+                <p>Requested by: {request.userId.username}</p>
+                <p>Status: {request.status}</p>
+                {request.timestamp && (
+                  <p>
+                    Date: {new Date(request.timestamp).toLocaleDateString()}
+                    {request.status === 'returned' && request.returnDate && (
+                      <> - {new Date(request.returnDate).toLocaleDateString()}</>
+                    )}
+                  </p>
+                )}
+              </li>
+            ))}
         </ul>
       </div>
       {confirmation.show && (

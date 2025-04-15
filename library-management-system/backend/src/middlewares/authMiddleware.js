@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, config.jwtSecret);
     req.user = decoded;
-    req.user.role = decoded.role; // Attach the user's role to the req.user object
+    req.user.role = decoded.role; 
     next();
   } catch (error) {
     res.status(400).send('Invalid token.');

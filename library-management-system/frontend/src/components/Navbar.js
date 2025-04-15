@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import axios from 'axios';
 import './Navbar.css';
 
 const Navbar = () => {
@@ -7,6 +8,8 @@ const Navbar = () => {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [notification, setNotification] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+  const [showNotificationPopup, setShowNotificationPopup] = useState(false);
   const dropdownRef = useRef(null);
 
   const handleLogout = () => {
@@ -20,6 +23,14 @@ const Navbar = () => {
 
   const handleMyAccount = () => {
     history.push('/my-account');
+  };
+
+  const handleNotificationsClick = () => {
+    setShowNotificationPopup(true);
+  };
+
+  const closeNotificationPopup = () => {
+    setShowNotificationPopup(false);
   };
 
   const handleClickOutside = (event) => {
@@ -46,6 +57,19 @@ const Navbar = () => {
     };
   }, []);
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.get('http://localhost:5000/notifications', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(response => {
+          setNotifications(response.data); 
+        })
+        .catch(error => console.error('Error fetching notifications:', error));
+    }
+  }, [token]);
+
   return (
     <nav className="navbar">
       <div className="navbar-brand">
@@ -66,6 +90,7 @@ const Navbar = () => {
             {showDropdown && (
               <div className="dropdown-menu">
                 <button onClick={handleMyAccount}>My Account</button>
+                <button onClick={handleNotificationsClick}>My Notifications</button>
                 <button onClick={handleLogout}>Logout</button>
               </div>
             )}
@@ -75,6 +100,27 @@ const Navbar = () => {
         )}
       </ul>
       {notification && <div className="notification">{notification}</div>}
+      {showNotificationPopup && (
+        <div className="notification-popup">
+          <div className="popup-content">
+            <h3>Notifications</h3>
+            {notifications.filter(notification => ['approved', 'disapproved'].includes(notification.status)).length > 0 ? (
+              <ul>
+                {notifications
+                  .filter(notification => ['approved', 'disapproved'].includes(notification.status))
+                  .map((notification, index) => (
+                    <li key={index}>
+                      Your request for <strong>{notification.bookId.title}</strong> has been <strong>{notification.status}</strong>.
+                    </li>
+                  ))}
+              </ul>
+            ) : (
+              <p>No new notifications available</p>
+            )}
+            <button onClick={closeNotificationPopup}>Close</button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

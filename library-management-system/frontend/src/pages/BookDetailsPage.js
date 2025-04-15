@@ -11,6 +11,9 @@ const BookDetailsPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [warning, setWarning] = useState('');
   const [notification, setNotification] = useState('');
+  const [isAvailable, setIsAvailable] = useState(false);
+  const [requestNotification, setRequestNotification] = useState('');
+  const [isApproved, setIsApproved] = useState(false); 
 
   useEffect(() => {
     axios.get(`http://localhost:5000/books/${id}`)
@@ -20,6 +23,34 @@ const BookDetailsPage = () => {
       .catch(error => {
         console.error('There was an error fetching the book details!', error);
       });
+  }, [id]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/books/${id}/availability`)
+      .then(response => {
+        setIsAvailable(response.data.available);
+      })
+      .catch(error => {
+        console.error('Error checking book availability:', error);
+      });
+  }, [id]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.get(`http://localhost:5000/notifications`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then(response => {
+          const approvedRequest = response.data.find(
+            notification => notification.bookId._id === id && notification.status === 'approved'
+          );
+          setIsApproved(!!approvedRequest); 
+        })
+        .catch(error => {
+          console.error('Error fetching notifications:', error);
+        });
+    }
   }, [id]);
 
   const handleAddReviewClick = () => {
@@ -74,6 +105,46 @@ const BookDetailsPage = () => {
       });
   };
 
+  const handleRequestBook = () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setWarning('Please log in to request this book.');
+      return;
+    }
+    setWarning('');
+    axios.post(`http://localhost:5000/books/${id}/request`, {}, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(() => {
+        setRequestNotification('Request sent successfully!');
+        setTimeout(() => setRequestNotification(''), 3000);
+      })
+      .catch(error => {
+        console.error('Error sending book request:', error);
+        alert('Failed to send request. Please try again.');
+      });
+  };
+
+  const handleReturnBook = () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setWarning('Please log in to return this book.');
+      return;
+    }
+    setWarning('');
+    axios.post(`http://localhost:5000/books/${id}/return`, {}, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
+      .then(() => {
+        setNotification('Return request sent successfully.');
+        setTimeout(() => setNotification(''), 3000);
+      })
+      .catch(error => {
+        console.error('Error sending return request:', error);
+        alert('Failed to send return request. Please try again.');
+      });
+  };
+
   if (!book) {
     return <div>Loading...</div>;
   }
@@ -108,6 +179,15 @@ const BookDetailsPage = () => {
       <button className="add-review-button" onClick={handleAddReviewClick}>Add Review</button>
       <span style={{ margin: '0 10px' }}></span> 
       <button className="add-review-button" onClick={handleAddToWishlist}>Add to Wishlist</button>
+      <span style={{ margin: '0 10px' }}></span> 
+      {isApproved ? (
+        <button className="add-review-button" onClick={handleReturnBook}>Return Book</button>
+      ) : (
+        isAvailable && (
+          <button className="add-review-button" onClick={handleRequestBook}>Request Book</button>
+        )
+      )}
+      {requestNotification && <div className="notification">{requestNotification}</div>}
       {warning && <p className="warning">{warning}</p>}
       {showModal && (
         <div className="modal">

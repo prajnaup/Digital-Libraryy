@@ -37,7 +37,8 @@ const bookSchema = new mongoose.Schema({
     comment: { type: String }
   }],
   about: { type: String, required: true },
-  image: { type: String, required: true }
+  image: { type: String, required: true },
+  copies: { type: Number, required: true, default: 1 } // New field for number of copies
 });
 
 bookSchema.pre('find', function (next) {
@@ -70,14 +71,47 @@ const wishlistSchema = new mongoose.Schema({
   books: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }]
 });
 
+const requestSchema = new mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },
+  status: { type: String, enum: ['pending', 'approved', 'disapproved', 'returned'], default: 'pending' },
+  timestamp: { 
+    type: Date,
+    get: (timestamp) => {
+      if (!timestamp) return undefined;
+      const options = { timeZone: 'Asia/Kolkata', hour12: true, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+      return new Intl.DateTimeFormat('en-GB', options).format(new Date(timestamp));
+    }
+  },
+  returnDate: { 
+    type: Date,
+    get: (returnDate) => {
+      if (!returnDate) return undefined;
+      const options = { 
+        timeZone: 'Asia/Kolkata', 
+        hour12: true, 
+        year: 'numeric', 
+        month: '2-digit', 
+        day: '2-digit', 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit' 
+      };
+      return new Intl.DateTimeFormat('en-GB', options).format(new Date(returnDate));
+    }
+  }
+}, { toJSON: { getters: true }, toObject: { getters: true } });
+
 const User = mongoose.model('User', userSchema);
 const Book = mongoose.model('Book', bookSchema);
 const Review = mongoose.model('Review', reviewSchema);
 const Wishlist = mongoose.model('Wishlist', wishlistSchema);
+const Request = mongoose.model('Request', requestSchema);
 
 module.exports = {
   User,
   Book,
   Review,
-  Wishlist
+  Wishlist,
+  Request
 };
