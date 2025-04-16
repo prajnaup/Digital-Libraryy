@@ -14,7 +14,8 @@ const BookDetailsPage = () => {
   const [isAvailable, setIsAvailable] = useState(false);
   const [requestNotification, setRequestNotification] = useState('');
   const [isApproved, setIsApproved] = useState(false); 
-
+  const [availableCopies, setAvailableCopies] = useState(0); 
+  const [isBorrowedByUser, setIsBorrowedByUser] = useState(false); 
   useEffect(() => {
     axios.get(`http://localhost:5000/books/${id}`)
       .then(response => {
@@ -29,6 +30,7 @@ const BookDetailsPage = () => {
     axios.get(`http://localhost:5000/books/${id}/availability`)
       .then(response => {
         setIsAvailable(response.data.available);
+        setAvailableCopies(response.data.availableCopies);
       })
       .catch(error => {
         console.error('Error checking book availability:', error);
@@ -46,6 +48,7 @@ const BookDetailsPage = () => {
             notification => notification.bookId._id === id && notification.status === 'approved'
           );
           setIsApproved(!!approvedRequest); 
+          setIsBorrowedByUser(!!approvedRequest); 
         })
         .catch(error => {
           console.error('Error fetching notifications:', error);
@@ -180,11 +183,13 @@ const BookDetailsPage = () => {
       <span style={{ margin: '0 10px' }}></span> 
       <button className="add-review-button" onClick={handleAddToWishlist}>Add to Wishlist</button>
       <span style={{ margin: '0 10px' }}></span> 
-      {isApproved ? (
+      {isBorrowedByUser ? (
         <button className="add-review-button" onClick={handleReturnBook}>Return Book</button>
       ) : (
-        isAvailable && (
+        isAvailable ? (
           <button className="add-review-button" onClick={handleRequestBook}>Request Book</button>
+        ) : (
+          <p className="warning">This book is currently unavailable.</p>
         )
       )}
       {requestNotification && <div className="notification">{requestNotification}</div>}

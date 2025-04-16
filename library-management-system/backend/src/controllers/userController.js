@@ -50,9 +50,15 @@ module.exports = {
   },
   signUp: async (req, res) => {
     try {
+      const { password } = req.body;
+      const passwordRegex = /^(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
+      if (!passwordRegex.test(password)) {
+        return res.status(400).send('Password must be at least 8 characters long and contain at least one special character.');
+      }
       const newUser = new User(req.body);
       await newUser.save();
-      res.status(201).json(newUser);
+      const token = jwt.sign({ id: newUser._id, role: newUser.role }, config.jwtSecret, { expiresIn: '1h' });
+      res.status(201).json({ token, role: newUser.role });
     } catch (error) {
       if (error.code === 11000) {
         if (error.keyPattern.username) {

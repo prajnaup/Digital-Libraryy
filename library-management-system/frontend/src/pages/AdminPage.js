@@ -78,7 +78,7 @@ const AdminPage = () => {
           setBooks([...books, response.data]);
           setNotification('Book added successfully!'); 
           setTimeout(() => setNotification(''), 3000); 
-          setNewBook({ title: '', author: '', genre: '', bookid: '', about: '', image: '', copies: 1 }); // Reset 'copies' to 1
+          setNewBook({ title: '', author: '', genre: '', bookid: '', about: '', image: '', copies: 1 }); 
         })
         .catch(error => console.error('Error adding book:', error));
     });
@@ -101,7 +101,7 @@ const AdminPage = () => {
           setNotification('Book updated successfully!'); 
           setTimeout(() => setNotification(''), 3000);
           setEditingBook(null);
-          setNewBook({ title: '', author: '', genre: '', bookid: '', about: '', image: '', copies: 1 }); // Reset 'copies' to 1
+          setNewBook({ title: '', author: '', genre: '', bookid: '', about: '', image: '', copies: 1 }); 
         })
         .catch(error => console.error('Error updating book:', error));
     });
@@ -109,7 +109,7 @@ const AdminPage = () => {
 
   const handleCancelEdit = () => {
     setEditingBook(null); 
-    setNewBook({ title: '', author: '', genre: '', bookid: '', about: '', image: '', copies: 1 }); // Reset 'copies' to 1
+    setNewBook({ title: '', author: '', genre: '', bookid: '', about: '', image: '', copies: 1 }); 
   };
 
   const handleDeleteBook = (id) => {
@@ -210,22 +210,20 @@ const AdminPage = () => {
         </ul>
       </div>
       <div className="admin-section">
-        <h2>Pending Returns</h2>
-        <ul>
-          {allRequests
-            .filter(request => request.status === 'approved') 
-            .map(request => (
-              <li key={request._id}>
-                <p>Book: {request.bookId.title}</p>
-                <p>Requested by: {request.userId.username}</p>
-                {request.timestamp && (
-                  <p>Date Approved: {new Date(request.timestamp).toLocaleDateString()}</p>
-                )}
-              </li>
-            ))}
-        </ul>
-      </div>
-      <div className="admin-section">
+  <h2>Pending Returns</h2>
+  <ul>
+    {allRequests
+      .filter(request => request.status === 'approved') 
+      .map(request => (
+        <li key={request._id}>
+          <p>Book: {request.bookId.title}</p>
+          <p>Requested by: {request.userId.username}</p>
+          <p>Date Approved: {request.timestamp || "Not available"}</p>
+        </li>
+      ))}
+  </ul>
+</div>
+      {/* <div className="admin-section">
         <h2>History</h2>
         <ul>
           {allRequests
@@ -246,7 +244,30 @@ const AdminPage = () => {
               </li>
             ))}
         </ul>
-      </div>
+      </div> */}
+
+<div className="admin-section">
+  <h2>History</h2>
+  <ul>
+    {allRequests
+      .filter(request => ['disapproved', 'returned'].includes(request.status)) 
+      .map(request => (
+        <li key={request._id}>
+          <p>Book: {request.bookId.title}</p>
+          <p>Requested by: {request.userId.username}</p>
+          <p>Status: {request.status}</p>
+          {request.timestamp && (
+            <p>
+              Date: {request.timestamp}
+              {request.status === 'returned' && request.returnDate && (
+                <> - {request.returnDate}</>
+              )}
+            </p>
+          )}
+        </li>
+      ))}
+  </ul>
+</div>
       {confirmation.show && (
         <div className="confirmation-modal">
           <div className="confirmation-content">

@@ -38,7 +38,17 @@ const bookSchema = new mongoose.Schema({
   }],
   about: { type: String, required: true },
   image: { type: String, required: true },
-  copies: { type: Number, required: true, default: 1 } // New field for number of copies
+  copies: { type: Number, required: true, default: 1 },
+  availableCopies: { type: Number, required: true, default: 1 } 
+});
+
+bookSchema.pre('save', function (next) {
+  if (this.isNew) {
+    this.availableCopies = this.copies; 
+  } else if (this.availableCopies > this.copies) {
+    this.availableCopies = this.copies; 
+  }
+  next();
 });
 
 bookSchema.pre('find', function (next) {
@@ -71,6 +81,37 @@ const wishlistSchema = new mongoose.Schema({
   books: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }]
 });
 
+// const requestSchema = new mongoose.Schema({
+//   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+//   bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },
+//   status: { type: String, enum: ['pending', 'approved', 'disapproved', 'returned'], default: 'pending' },
+//   timestamp: { 
+//     type: Date,
+//     get: (timestamp) => {
+//       if (!timestamp) return undefined;
+//       const options = { timeZone: 'Asia/Kolkata', hour12: true, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
+//       return new Intl.DateTimeFormat('en-GB', options).format(new Date(timestamp));
+//     }
+//   },
+//   returnDate: { 
+//     type: Date,
+//     get: (returnDate) => {
+//       if (!returnDate) return undefined;
+//       const options = { 
+//         timeZone: 'Asia/Kolkata', 
+//         hour12: true, 
+//         year: 'numeric', 
+//         month: '2-digit', 
+//         day: '2-digit', 
+//         hour: '2-digit', 
+//         minute: '2-digit', 
+//         second: '2-digit' 
+//       };
+//       return new Intl.DateTimeFormat('en-GB', options).format(new Date(returnDate));
+//     }
+//   }
+// }, { toJSON: { getters: true }, toObject: { getters: true } });
+
 const requestSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   bookId: { type: mongoose.Schema.Types.ObjectId, ref: 'Book', required: true },
@@ -79,28 +120,31 @@ const requestSchema = new mongoose.Schema({
     type: Date,
     get: (timestamp) => {
       if (!timestamp) return undefined;
-      const options = { timeZone: 'Asia/Kolkata', hour12: true, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' };
-      return new Intl.DateTimeFormat('en-GB', options).format(new Date(timestamp));
+      return new Date(timestamp).toLocaleString('en-GB', { 
+        timeZone: 'Asia/Kolkata', 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric', 
+        // hour: '2-digit', 
+        // minute: '2-digit' 
+      });
     }
   },
   returnDate: { 
     type: Date,
     get: (returnDate) => {
       if (!returnDate) return undefined;
-      const options = { 
+      return new Date(returnDate).toLocaleString('en-GB', { 
         timeZone: 'Asia/Kolkata', 
-        hour12: true, 
-        year: 'numeric', 
-        month: '2-digit', 
         day: '2-digit', 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit' 
-      };
-      return new Intl.DateTimeFormat('en-GB', options).format(new Date(returnDate));
+        month: '2-digit', 
+        year: 'numeric', 
+        // hour: '2-digit', 
+        // minute: '2-digit' 
+      });
     }
   }
-}, { toJSON: { getters: true }, toObject: { getters: true } });
+}, { toJSON: { getters: true }, toObject: { getters: true } }); // Enable getters
 
 const User = mongoose.model('User', userSchema);
 const Book = mongoose.model('Book', bookSchema);

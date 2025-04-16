@@ -48,15 +48,24 @@ module.exports = {
       if (!['approved', 'disapproved'].includes(status)) {
         return res.status(400).send('Invalid status');
       }
-      const updatedRequest = await Request.findByIdAndUpdate(
-        req.params.id,
-        { status, timestamp: new Date() }, 
-        { new: true }
-      );
-      if (!updatedRequest) {
+      const request = await Request.findById(req.params.id).populate('bookId');
+      if (!request) {
         return res.status(404).send('Request not found');
       }
-      res.status(200).json(updatedRequest);
+
+      if (status === 'approved') {
+        if (request.bookId.availableCopies <= 0) {
+          return res.status(400).send('No copies available to approve the request');
+        }
+        request.bookId.availableCopies -= 1;
+        await request.bookId.save();
+      }
+
+      request.status = status;
+      request.timestamp = new Date();
+      await request.save();
+
+      res.status(200).json(request);
     } catch (error) {
       res.status(500).send(error.message);
     }
@@ -64,14 +73,18 @@ module.exports = {
 
   confirmReturn: async (req, res) => {
     try {
-      const request = await Request.findByIdAndUpdate(
-        req.params.id,
-        { status: 'returned', returnDate: new Date() }, 
-        { new: true }
-      );
-      if (!request) {
-        return res.status(404).send('Return request not found.');
+      const request = await Request.findById(req.params.id).populate('bookId');
+      if (!request || request.status !== 'return-pending') {
+        return res.status(404).send('Return request not found or already processed.');
       }
+
+      request.status = 'returned';
+      request.returnDate = new Date();
+      await request.save();
+
+      request.bookId.availableCopies += 1;
+      await request.bookId.save();
+
       res.status(200).send(`Book return confirmed successfully on ${request.returnDate}.`);
     } catch (error) {
       res.status(500).send(error.message);
