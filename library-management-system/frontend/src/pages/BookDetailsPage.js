@@ -164,6 +164,24 @@ const BookDetailsPage = () => {
       <p><strong>Author:</strong> {book.author}</p>
       <p><strong>Genre:</strong> {book.genre}</p>
       <p className="about"><strong></strong> {book.about}</p>
+
+      <button className="add-review-button" onClick={handleAddReviewClick}>Add Review</button>
+      <span style={{ margin: '0 10px' }}></span> 
+      <button className="add-review-button" onClick={handleAddToWishlist}>Add to Wishlist</button>
+      <span style={{ margin: '0 10px' }}></span> 
+      {isBorrowedByUser ? (
+        <button className="add-review-button" onClick={handleReturnBook}>Return Book</button>
+      ) : (
+        isAvailable ? (
+          <button className="add-review-button" onClick={handleRequestBook}>Request Book</button>
+        ) : (
+          <p className="warning">This book is currently unavailable.</p>
+        )
+      )}
+
+      {requestNotification && <div className="notification">{requestNotification}</div>}
+      {warning && <p className="warning">{warning}</p>}
+
       {book.reviews && book.reviews.filter(review => review.userId).length > 0 ? (
         <div className="reviews">
           <h2>Reviews</h2>
@@ -179,21 +197,7 @@ const BookDetailsPage = () => {
       ) : (
         <p>No reviews available for this book.</p>
       )}
-      <button className="add-review-button" onClick={handleAddReviewClick}>Add Review</button>
-      <span style={{ margin: '0 10px' }}></span> 
-      <button className="add-review-button" onClick={handleAddToWishlist}>Add to Wishlist</button>
-      <span style={{ margin: '0 10px' }}></span> 
-      {isBorrowedByUser ? (
-        <button className="add-review-button" onClick={handleReturnBook}>Return Book</button>
-      ) : (
-        isAvailable ? (
-          <button className="add-review-button" onClick={handleRequestBook}>Request Book</button>
-        ) : (
-          <p className="warning">This book is currently unavailable.</p>
-        )
-      )}
-      {requestNotification && <div className="notification">{requestNotification}</div>}
-      {warning && <p className="warning">{warning}</p>}
+
       {showModal && (
         <div className="modal">
           <div className="modal-content">

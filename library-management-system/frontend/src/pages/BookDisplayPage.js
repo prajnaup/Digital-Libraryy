@@ -70,7 +70,11 @@ const BookDisplayPage = () => {
 
   return (
     <div className="book-display-page">
-      <h1>{query ? 'Search Results' : 'Books'}</h1>
+      <h1>
+        {query 
+          ? `Search Results for "${query}"` 
+          : 'Books'}
+      </h1>
 
       <button onClick={() => setIsFilterModalOpen(true)} className="filter-button">Filter</button>
 
@@ -108,6 +112,10 @@ const BookDisplayPage = () => {
             </div>
           </div>
         </div>
+      )}
+
+      {query && filteredBooks.length === 0 && (
+        <p>No results found for "{query}".</p>
       )}
 
       <ul className="book-list">
